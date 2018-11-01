@@ -27,4 +27,6 @@ do
 done
 log_info "Compressing $HOME_DIRNAMES to $ZIP_FILEPATH ...OK"
 
-
+log_info "Removing backups older than $OLD_BACKUPS_N_DAYS in '$HOME_ZIP_DIRPATH' ..."
+utils/remove_old_files.sh "$HOME_ZIP_DIRPATH" $OLD_BACKUPS_N_DAYS
+log_info "Removing backups older than $OLD_BACKUPS_N_DAYS in '$HOME_ZIP_DIRPATH' ...OK"

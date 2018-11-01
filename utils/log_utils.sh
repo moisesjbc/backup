@@ -2,7 +2,7 @@ function log {
     log_level=$1
     message=$2
 
-    echo "[${1}] ${2}"
+    echo -e "[${1}] ${2}"
 }
 
 function log_info {
