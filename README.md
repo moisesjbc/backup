@@ -1,5 +1,7 @@
 # backup
 
+Tool for making backups.
+
 ## Install and configure (tested on Ubuntu 18.04)
 
 1. Clone this repo.
