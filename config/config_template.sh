@@ -15,3 +15,6 @@ HOME_DIRNAMES=()
 # Number of days for keeping backups. Backups older than this number of days
 # will be deleted
 OLD_BACKUPS_N_DAYS=30
+
+# If not empty, clone all repositories from this Github account
+GITHUB_USERNAME=""

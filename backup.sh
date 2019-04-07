@@ -11,7 +11,7 @@ if [ ! -f "$CONFIG_FILEPATH" ]; then
 fi
 source $CONFIG_FILEPATH
 
-# Compress and backup home directories.
+# Initialize zip file.
 DATE=`date +%Y_%m_%d`
 
 if [ ! -d "${HOME_ZIP_DIRPATH}" ]; then
@@ -20,6 +20,16 @@ if [ ! -d "${HOME_ZIP_DIRPATH}" ]; then
 fi
 
 ZIP_FILEPATH="${HOME_ZIP_DIRPATH}/${ZIP_FILENAME}_${DATE}"
+
+# If defined, clone all the PUBLIC repositories of the given username.
+if [ ! -z "${GITHUB_USERNAME}" ]; then
+    log_info "Making backup of ${GITHUB_USERNAME}'s PUBLIC directories ..."
+    (cd /tmp/ && github-backup.sh "${GITHUB_USERNAME}")
+    zip -r "$ZIP_FILEPATH" "/tmp/github_repositories_backup_${GITHUB_USERNAME}"*
+    log_info "Making backup of ${GITHUB_USERNAME}'s PUBLIC directories ...OK"
+fi
+
+# Compress and backup home directories.
 log_info "Compressing ${HOME_DIRNAMES} to $ZIP_FILEPATH ..."
 for home_dirname in "${HOME_DIRNAMES[@]}"
 do
@@ -27,6 +37,7 @@ do
 done
 log_info "Compressing $HOME_DIRNAMES to $ZIP_FILEPATH ...OK"
 
+# Remove old backups
 log_info "Removing backups older than $OLD_BACKUPS_N_DAYS in '$HOME_ZIP_DIRPATH' ..."
 utils/remove_old_files.sh "$HOME_ZIP_DIRPATH" $OLD_BACKUPS_N_DAYS
-log_info "Removing backups older than $OLD_BACKUPS_N_DAYS in '$HOME_ZIP_DIRPATH' ...OK"
+log_info "Removing backups older than $OLD_BACKUPS_N_DAYS in '$HOME_ZIP_DIRPATH' ...OK"s
